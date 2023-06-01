@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    container_name: database_shop
+    env_file:
+      - .env
+    environment:
+      TZ: "Europe/Sofia"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASS}
+      MYSQL_HOST: ${MYSQL_HOST}
+    volumes:
+      - "./server:/var/run/mysqld"
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile_frontend
+    container_name: frontend_shop
+    restart: always
+    ports:
+      - "3000:3000"
+
+  api:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile_backend
+    container_name: backend_shop
+    restart: always
+    volumes:
+      - "../online_shop/:/api/"
+      - "./server:/run/mysqld"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+      - frontend

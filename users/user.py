@@ -14,7 +14,7 @@ class UserController:
             user = User.objects.get(id=id)
         except User.DoesNotExist:
             logging.error('Invalid User ID')
-            return None
+            raise ValueError('Invalid User ID')
         return user
 
     @staticmethod
@@ -56,7 +56,7 @@ class UserController:
             Token.objects.get(user=id)
         except Token.DoesNotExist:
             logging.error('User is not login')
-            return ValueError('User is not login')
+            raise ValueError('User is not login')
 
         logging.info('User is login')
 
@@ -68,11 +68,11 @@ class UserController:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             logging.error('Invalid User')
-            return ValueError('Invalid User')
+            raise ValueError('Invalid User')
 
         if not check_password(password, user.password):
             logging.error('Invalid password')
-            return ValueError('Invalid password')
+            raise ValueError('Invalid password')
 
         try:
             token = Token.objects.get(user=user)
@@ -95,5 +95,5 @@ class UserController:
         try:
             Token.objects.get(user=request.user.id).delete()
         except Token.DoesNotExist:
-            return ValueError('User is not login')
+            raise ValueError('User is not login')
         logout(request)

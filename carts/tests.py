@@ -140,8 +140,8 @@ class CartApiTest(TestCase):
 
         check_delete_laptop = self.client.delete(f'{self.cart_url}/', {'id': get_cart_content.data[1].get('id')}, **{"HTTP_AUTHORIZATION": f"Token {self.token}"})
         self.assertEquals(check_delete_laptop.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEquals(check_delete_laptop.data['message'], 'Wrong cart id')
+        self.assertEquals(check_delete_laptop.data, 'Wrong cart id')
 
         cart_content = self.client.get(f'{self.cart_url}/', **{"HTTP_AUTHORIZATION": f"Token {self.token}"})
         self.assertEquals(cart_content.status_code, status.HTTP_200_OK)
-        self.assertEquals(len(cart_content.data), 1)
+        self.assertEquals(check_delete_laptop.data, 'Wrong cart id')

@@ -11,7 +11,7 @@ class CategoryController:
             category = Category.objects.get(id=id)
         except Category.DoesNotExist:
             logging.error('Invalid Category ID')
-            return ValueError('Invalid Category ID')
+            raise ValueError('Invalid Category ID')
         return category
 
     @staticmethod
@@ -31,7 +31,7 @@ class CategoryController:
             Category.objects.get(id=id).delete()
         except Category.DoesNotExist:
             logging.error('Wrong category id')
-            return ValueError('Wrong category id')
+            raise ValueError('Wrong category id')
 
         logging.info('Category was removed successfully')
 

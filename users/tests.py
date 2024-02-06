@@ -95,7 +95,7 @@ class UserApiTest(TestCase):
     def test_user_login(self):
         check_logout = self.client.get(f'{self.user_url}/login')
         self.assertEquals(check_logout.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertFalse(check_logout.data['login'])
+        self.assertEquals(check_logout.data, 'User is not login')
 
         payload = {
             'username': 'username_test',

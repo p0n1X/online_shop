@@ -42,7 +42,7 @@ class OrderController:
             order = Order.objects.get(id=id)
         except Order.DoesNotExist:
             logging.error('Invalid Supplier ID')
-            return ValueError('Invalid Order ID')
+            raise ValueError('Invalid Order ID')
 
         orders = OrderDetail.objects.filter(order_number=order)
         serialized = OrderDetailSerializer(orders, many=True)

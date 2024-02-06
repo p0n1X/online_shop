@@ -13,7 +13,7 @@ class ProductController:
             product = Product.objects.get(id=product_id)
         except Product.DoesNotExist:
             logging.error('Invalid Product ID')
-            return ValueError('Invalid Product ID')
+            raise ValueError('Invalid Product ID')
         return product
 
     @staticmethod
@@ -42,7 +42,7 @@ class ProductController:
             Product.objects.get(id=id).delete()
         except Product.DoesNotExist:
             logging.error('Wrong product id')
-            return ValueError('Wrong product id')
+            raise ValueError('Wrong product id')
 
         logging.info('The Product was removed successfully')
 
@@ -77,7 +77,7 @@ class ProductController:
             products = Product.objects.filter(category__id=category_id)
         except Product.DoesNotExist:
             logging.error('Invalid Product ID')
-            return ValueError('Invalid Product ID')
+            raise ValueError('Invalid Product ID')
 
         serialized = ProductSerializer(products, many=True)
 

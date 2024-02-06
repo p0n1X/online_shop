@@ -35,6 +35,6 @@ class CartController:
             Cart.objects.get(id=id).delete()
         except Cart.DoesNotExist:
             logging.error('Wrong cart id')
-            return ValueError('Wrong cart id')
+            raise ValueError('Wrong cart id')
 
         logging.info('The Product was removed successfully')

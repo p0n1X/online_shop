@@ -120,7 +120,7 @@ class OrderApiTest(TestCase):
         }
         result = self.client.post(f'{self.order_url}/', payload)
         self.assertEquals(result.status_code, status.HTTP_200_OK)
-        self.assertEquals(result.data['message'], 'success')
+        self.assertEquals(result.data['message'], 'The Order was created successfully')
 
         get_order = self.client.get(f'{self.order_url}/', **{"HTTP_AUTHORIZATION": f"Token {self.token}"})
         self.assertEquals(get_order.status_code, status.HTTP_200_OK)

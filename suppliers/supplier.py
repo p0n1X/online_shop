@@ -10,7 +10,7 @@ class SupplierController:
             supplier = Supplier.objects.get(id=id)
         except Supplier.DoesNotExist:
             logging.error('Invalid supplier id')
-            return ValueError('Invalid supplier id')
+            raise ValueError('Invalid supplier id')
         return supplier
 
     @staticmethod
@@ -31,7 +31,7 @@ class SupplierController:
             Supplier.objects.get(id=id).delete()
         except Supplier.DoesNotExist:
             logging.error('Invalid supplier id')
-            return ValueError('Invalid supplier id')
+            raise ValueError('Invalid supplier id')
 
         logging.info('The Supplier was removed successfully')
 
